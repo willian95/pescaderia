@@ -1,26 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
+//import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import {HashRouter, Route, Switch} from "react-router-dom";
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Navbar from './components/navbar/Navbar'
+import Home from './components/home/Home'
+import Cliente from './components/cliente/Cliente'
+
+import DB from './db'
+
+class App extends React.Component{
+
+  state = {
+    db: new DB('bancos')
+  }
+
+  async componentDidMount(){
+
+    this.state.db.seedBancos()
+
+  }
+
+  render(){
+
+    return (
+      <HashRouter>
+        <div>
+          <Navbar />
+          <Switch>
+            
+            <Route path="/" exact component={Home}></Route>
+            <Route path="/clientes"  component={Cliente}></Route>
+            
+          </Switch>
+        </div>
+      </HashRouter>
+      
+    );
+
+  }
+
 }
 
 export default App;
